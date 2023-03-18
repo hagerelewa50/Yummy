@@ -1,0 +1,48 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    background-color: #0D0D0D;
+    color: #f9f6f6; 
+}
+.nav-side{
+    width: 320px;
+    position: fixed;
+    left: 0;
+    z-index: 111;
+}
+.nav-links {
+    height: 200px;
+    overflow: hidden;
+}
+
+.nav-link{
+    text-decoration: none;
+    margin-top: 100px;
+}
+.nav-link a{
+    text-decoration: none;
+    color: #f9f6f6;
+}
+.nav-footerIcons i ,.open-close-icon ,.iconLogo i ,.items-meal,.area-meal{
+    cursor: pointer;
+}
+.layer-meal{
+    transition: all 0.4s;
+    background-color: #fbf8f8b7;
+    opacity: 0;
+}
+.meal:hover .layer-meal{
+    top:0px !important;
+    opacity: 1; 
+}
+.form-search{
+    background-color: transparent;
+    color: #f9f6f6 !important;
+}
+.form-search:focus{
+    background-color: transparent;
+}
