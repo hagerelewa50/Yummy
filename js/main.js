@@ -1,4 +1,3 @@
-// {/* <reference types="../@types/jquery" /> */}
 let innerWidth = $(".nav-item").outerWidth(true)
 $(".nav-side").animate({left:`-${innerWidth}px`})
 $(".open-close-icon").click(function(){
@@ -17,17 +16,17 @@ $(".open-close-icon").click(function(){
         $(".open-close-icon").removeClass("fa-align-justify").addClass("fa-x")
     }
 })
-// $(document).ready(function(){
-//     $("nav").addClass("d-none")
-//     $(".loading").removeClass("d-none").addClass("d-flex")
-// })
+$(document).ready(function(){
+    $(".loading").fadeOut(1000)
+})
 
 async function getData(name=""){
+    $(".loading").fadeIn(300)
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)
     let response = await api.json()
     $("#home").removeClass("d-none")
     displayHome(response.meals.slice(0 , 20))
-    
+    $(".loading").fadeOut(300)  
 }
 getData()
 
@@ -57,11 +56,14 @@ function displayHome(response){
         getDetailMeal(idMeal)
     })
 }
-
+// detail meal
 async function getDetailMeal(idMeal){ 
+    $(".loading").fadeIn(300)
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idMeal}`)
     let response = await api.json()
     detailMeal(response)
+    $(".loading").fadeOut(300)
+
 }
 
 function detailMeal(response){
@@ -104,7 +106,7 @@ function detailMeal(response){
 </div>`
 document.getElementById("detailRow").innerHTML= temp
 }
-
+// search
 $("#searchInput").click(function(){
     $("#home").addClass("d-none")
     $("#details").addClass("d-none")
@@ -132,10 +134,12 @@ $("#searchInput").click(function(){
 })
 
 async function getDataSearchFullName(name){
+    $(".loading").fadeIn(300)
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`)
     let response = await api.json()
     if(response.meals!=null){
         displaySearch(response.meals.slice(0, 20))
+        $(".loading").fadeOut(300)
         $(".meal").click(function(){
             $("#Search").addClass("d-none")
             $("#details").removeClass("d-none")
@@ -143,8 +147,11 @@ async function getDataSearchFullName(name){
             getDetailMeal(idMeal)
         })
     }
+    $(".loading").fadeOut(300)
 }
 async function getDataSearchLetter(letter){
+    $(".loading").fadeIn(300)
+
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${letter}`)
     let response = await api.json()
         displaySearch(response.meals.slice(0, 20))
@@ -154,6 +161,7 @@ async function getDataSearchLetter(letter){
             let idMeal=$(this).attr("idMeal")
             getDetailMeal(idMeal)
         })
+        $(".loading").fadeOut(300)
 }
 function displaySearch(response){
     let meal = ""
@@ -171,23 +179,24 @@ function displaySearch(response){
     }
     document.getElementById("searchData").innerHTML= meal
 }
-
+// category
 $("#categoryInput").click(function(){
-    // $("#home").addClass("d-none")
-    // $("#Search").addClass("d-none")
-    // $("#details").addClass("d-none")
-    // $("#Area").addClass("d-none")
-    // $("#ingredients").addClass("d-none")
-    // $("#contact").addClass("d-none")
-    // $("#category").removeClass("d-none")
-    $("section").
+    $("#home").addClass("d-none")
+    $("#Search").addClass("d-none")
+    $("#details").addClass("d-none")
+    $("#Area").addClass("d-none")
+    $("#ingredients").addClass("d-none")
+    $("#contact").addClass("d-none")
+    $("#category").removeClass("d-none")
     getCategory()
 })
 
 async function getCategory(){
+    $(".loading").fadeIn(300)
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/categories.php`)
     let response = await api.json()
    disPlayCategory(response.categories.slice(0, 20))
+   $(".loading").fadeOut(300)
    $(".layer-meal").click(function(){
     $("#category").addClass("d-none")
     let nameCategory=$(this).attr("nameCategory")
@@ -213,6 +222,7 @@ function disPlayCategory(response){
 
 document.getElementById("categoryRow").innerHTML=temp
 }
+// area
 $("#areaInput").click(function(){
     $("#home").addClass("d-none")
     $("#Search").addClass("d-none")
@@ -224,9 +234,11 @@ $("#areaInput").click(function(){
     getArea()
 })
 async function getArea(){
+    $(".loading").fadeIn(300)
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/list.php?a=list`)
     let response = await api.json()
     disPlayArea(response.meals)
+    $(".loading").fadeOut(300)
 
 }
 function disPlayArea(response){
@@ -244,10 +256,13 @@ function disPlayArea(response){
 
 }
 async function disPlayAreaMeal(area){
+    $(".loading").fadeIn(300)
     $("#Area").addClass("d-none")
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${area}`)
     let response = await api.json()
     displayHome(response.meals.slice(0 , 20))
+    $(".loading").fadeOut(300)
+
 }
 // ingredients
 $("#ingredientsInput").click(function(){
@@ -262,9 +277,12 @@ $("#ingredientsInput").click(function(){
     getIngredient()
 })
 async function getIngredient(){
+    $(".loading").fadeIn(300)
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/list.php?i=list`)
     let response = await api.json()
     disPlayIngredient(response.meals.slice(0,20))
+    $(".loading").fadeOut(300)
+
 
 }
 function disPlayIngredient(response){
@@ -283,10 +301,13 @@ function disPlayIngredient(response){
 }
 
 async function disPlayIngredientMeal(ingred){
+    $(".loading").fadeIn(300)
     $("#ingredients").addClass("d-none")
     let api = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingred}`)
     let response = await api.json()
     displayHome(response.meals.slice(0 , 20))
+    $(".loading").fadeOut(300)
+
 }
 
 // contacts
